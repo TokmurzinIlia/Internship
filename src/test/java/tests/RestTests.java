@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.opentest4j.AssertionFailedError;
 import utilsAPI.Log;
 import utilsAPI.Methods;
 import java.util.List;
@@ -78,9 +79,17 @@ public class RestTests {
 
             Log.info("An up-to-date list of countries bordering on " + borderingСountry.get(i));
 
+        try {
             assertTrue(actualListCountryBorders.contains(givenСountry));
 
             Log.info("The current list of countries contains " + givenСountry);
+        }
+        catch (AssertionFailedError e){
+            Log.error("The current list of countries does not contains " + givenСountry, e);
+        }
+        finally {
+            continue;
+        }
         }
     }
 }
