@@ -27,12 +27,12 @@ public class RestTests {
 
     @ParameterizedTest(name = "Test that checks a list of boarders by values country code {2}")
     @ArgumentsSource(DataProviderCountryBordersRussia.class)
-    public void bordersTest(List<String> countryBorders, String countryCode, String key){
+    public void bordersTest(List<String> expectedListCountryBorders, String countryCode, String key){
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
-        List<String> actualList = Methods.getListBoardersFromResponse(rs, key);
+        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
 
-        assertEquals(countryBorders, actualList);
+        assertEquals(expectedListCountryBorders, actualListCountryBorders);
     }
 
     @ParameterizedTest(name = "Test that checks the mutuality of boarders")

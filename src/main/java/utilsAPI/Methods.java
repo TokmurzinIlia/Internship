@@ -22,6 +22,6 @@ public class Methods {
     @Step("Getting a list borders from response by value {0} and {1}")
     public static List<String> getListBoardersFromResponse(Response response, String key){
        return response
-               .then().extract().jsonPath().get(key + "[0]");
+               .then().extract().jsonPath().get(key);
     }
 }

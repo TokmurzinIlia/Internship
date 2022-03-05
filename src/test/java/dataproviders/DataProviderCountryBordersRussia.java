@@ -12,6 +12,6 @@ public class DataProviderCountryBordersRussia implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
         return Stream.of(
                 Arguments.of(Arrays.asList("AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR")
-                        , "RUS", "borders"));
+                        , "RUS", "borders[0]"));
     }
 }
