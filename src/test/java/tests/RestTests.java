@@ -1,18 +1,13 @@
 package tests;
 
 import dataproviders.DataProviderCountryBorders;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import utilsAPI.Log;
 import utilsAPI.Methods;
-
 import java.util.List;
-
-import static endpoints.EndPoints.*;
-import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -49,15 +44,21 @@ public class RestTests {
     }
 
     @ParameterizedTest(name = "Test that checks the mutuality of boarders")
-    @CsvSource({"AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR"})
-    public void mutualityBordersTest(String country){
-        List<String> actualList = given()
-                .baseUri(BASEURI)
-                .basePath(BASEPATH)
-                .contentType(ContentType.JSON)
-                .when().get(CODES+country)
-                .then().extract().jsonPath().getList("borders[0]");
-        //System.out.println(actualList);
-        assertTrue(actualList.contains("RUS"));
+    @CsvSource({"AZE, RUS, borders[0]","BLR, RUS, borders[0]","CHN, RUS, borders[0]","EST, RUS, borders[0]","FIN, RUS, borders[0]",
+            "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
+            ,"MNG, RUS, borders[0]","NOR, RUS, borders[0]","POL, RUS, borders[0]","UKR, RUS, borders[0]"})
+    public void mutualityBordersTest(String borderingСountry, String givenСountry, String key){
+        Response rs = Methods
+                .getCountryBoarderResponse(borderingСountry);
+
+        Log.info("Request response received");
+
+        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+
+        Log.info("An up-to-date list of countries bordering on " + borderingСountry);
+
+        assertTrue(actualListCountryBorders.contains(givenСountry));
+
+        Log.info("The current list of countries contains " + givenСountry);
     }
 }

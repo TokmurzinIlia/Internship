@@ -24,4 +24,5 @@ public class Methods {
        return response
                .then().extract().jsonPath().get(key);
     }
+
 }
