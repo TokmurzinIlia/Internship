@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RestTests {
 
-    @ParameterizedTest(name = "Test status code")
-    @CsvSource({"RUS"})
+    @ParameterizedTest(name = "Test status code {0}")
+    @CsvSource({"AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR"})
     public void statusCodeTest(String country){
         Response rs = Methods
                 .getCountryBoarderResponse(country);
@@ -27,7 +27,7 @@ public class RestTests {
         Log.info("Status response code 200");
     }
 
-    @ParameterizedTest(name = "Test that checks a list of boarders by values country code {2}")
+    @ParameterizedTest(name = "Test that checks a list of boarders by values country code {1}")
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void bordersTest(List<String> expectedListCountryBorders, String countryCode, String key){
         Response rs = Methods
@@ -64,7 +64,7 @@ public class RestTests {
         Log.info("The current list of countries contains " + givenСountry);
     }
 
-    @ParameterizedTest(name = "Test that checks the mutuality of boarders")
+    @ParameterizedTest(name = "A test that checks the reciprocity of the value of the border of a given country {1} with the current list of bordering countries ")
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void mutualityBordersTest1(List<String> borderingСountry, String givenСountry, String key) {
 
