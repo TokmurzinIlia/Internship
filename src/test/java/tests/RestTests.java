@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import utilsAPI.Log;
 import utilsAPI.Methods;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RestTests {
 
@@ -48,6 +48,7 @@ public class RestTests {
             "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
             ,"MNG, RUS, borders[0]","NOR, RUS, borders[0]","POL, RUS, borders[0]","UKR, RUS, borders[0]"})
     public void mutualityBordersTest(String borderingСountry, String givenСountry, String key){
+
         Response rs = Methods
                 .getCountryBoarderResponse(borderingСountry);
 
@@ -60,5 +61,26 @@ public class RestTests {
         assertTrue(actualListCountryBorders.contains(givenСountry));
 
         Log.info("The current list of countries contains " + givenСountry);
+    }
+
+    @ParameterizedTest(name = "Test that checks the mutuality of boarders")
+    @ArgumentsSource(DataProviderCountryBorders.class)
+    public void mutualityBordersTest1(List<String> borderingСountry, String givenСountry, String key) {
+
+        for (int i = 0; i < borderingСountry.size(); i++) {
+
+            Response rs = Methods
+                    .getCountryBoarderResponse(borderingСountry.get(i));
+
+            Log.info("Request response received");
+
+            List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+
+            Log.info("An up-to-date list of countries bordering on " + borderingСountry.get(i));
+
+            assertTrue(actualListCountryBorders.contains(givenСountry));
+
+            Log.info("The current list of countries contains " + givenСountry);
+        }
     }
 }
