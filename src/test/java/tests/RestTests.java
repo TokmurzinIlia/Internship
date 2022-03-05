@@ -2,6 +2,9 @@ package tests;
 
 import dataproviders.DataProviderCountryBorders;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -11,9 +14,10 @@ import utilsAPI.Methods;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RestTests {
 
+    @Order(1)
     @ParameterizedTest(name = "Test status code {0}")
     @CsvSource({"AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR"})
     public void statusCodeTest(String country){
@@ -25,8 +29,11 @@ public class RestTests {
         rs.then().statusCode(200);
 
         Log.info("Status response code 200");
+
+        System.out.println();
     }
 
+    @Order(2)
     @ParameterizedTest(name = "Test that checks a list of boarders by values country code {1}")
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void bordersTest(List<String> expectedListCountryBorders, String countryCode, String key){
@@ -42,8 +49,11 @@ public class RestTests {
         assertEquals(expectedListCountryBorders, actualListCountryBorders);
 
         Log.info("The current list of countries equals to expected list");
+
+        System.out.println();
     }
 
+    @Order(3)
     @ParameterizedTest(name = "Test that checks the mutuality of boarders")
     @CsvSource({"AZE, RUS, borders[0]","BLR, RUS, borders[0]","CHN, RUS, borders[0]","EST, RUS, borders[0]","FIN, RUS, borders[0]",
             "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
@@ -62,8 +72,11 @@ public class RestTests {
         assertTrue(actualListCountryBorders.contains(givenСountry));
 
         Log.info("The current list of countries contains " + givenСountry);
+
+        System.out.println();
     }
 
+    @Order(4)
     @ParameterizedTest(name = "A test that checks the reciprocity of the value of the border of a given country {1} with the current list of bordering countries ")
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void mutualityBordersTest1(List<String> borderingСountry, String givenСountry, String key) {
@@ -83,9 +96,13 @@ public class RestTests {
             assertTrue(actualListCountryBorders.contains(givenСountry));
 
             Log.info("The current list of countries contains " + givenСountry);
+
+            System.out.println();
         }
         catch (AssertionFailedError e){
             Log.error("The current list of countries does not contains " + givenСountry, e);
+
+            System.out.println();
         }
         finally {
             continue;
