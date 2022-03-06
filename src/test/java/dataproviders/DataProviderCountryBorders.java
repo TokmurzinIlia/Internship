@@ -11,23 +11,23 @@ public class DataProviderCountryBorders implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
         return Stream.of(
-                Arguments.of(Arrays.asList("AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR")
-                        , "RUS", "borders[0]"),
-                Arguments.of(Arrays.asList("ARM","GEO","IRN","RUS","TUR"), "AZE", "borders[0]"),
-                Arguments.of(Arrays.asList("LVA","LTU","POL","RUS","UKR"), "BLR", "borders[0]"),
-                Arguments.of(Arrays.asList("AFG","BTN","MMR","HKG","IND","KAZ","PRK","KGZ","LAO",
-                        "MAC","MNG","PAK","RUS","TJK","VNM","NPL"), "CHN", "borders[0]"),
-                Arguments.of(Arrays.asList("LVA","RUS"), "EST", "borders[0]"),
-                Arguments.of(Arrays.asList("NOR","SWE","RUS"), "FIN", "borders[0]"),
-                Arguments.of(Arrays.asList("ARM","AZE","RUS","TUR"), "GEO", "borders[0]"),
-                Arguments.of(Arrays.asList("CHN","KGZ","RUS","TKM","UZB"), "KAZ", "borders[0]"),
-                Arguments.of(Arrays.asList("CHN","KOR","RUS"), "PRK", "borders[0]"),
-                Arguments.of(Arrays.asList("BLR","EST","LTU","RUS"), "LVA", "borders[0]"),
-                Arguments.of(Arrays.asList("BLR","LVA","POL","RUS"), "LTU", "borders[0]"),
-                Arguments.of(Arrays.asList("CHN","RUS"), "MNG", "borders[0]"),
-                Arguments.of(Arrays.asList("FIN","SWE","RUS"), "NOR", "borders[0]"),
-                Arguments.of(Arrays.asList("BLR","CZE","DEU","LTU","RUS","SVK","UKR"), "POL", "borders[0]"),
-                Arguments.of(Arrays.asList("BLR","HUN","MDA","POL","ROU","RUS","SVK"), "UKR", "borders[0]")
+                Arguments.of("RUS", Arrays.asList("AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR")
+                        , "borders[0]"),
+                Arguments.of("AZE", Arrays.asList("ARM","GEO","IRN","RUS","TUR"), "borders[0]"),
+                Arguments.of("BLR", Arrays.asList("LVA","LTU","POL","RUS","UKR"), "borders[0]"),
+                Arguments.of("CHN", Arrays.asList("AFG","BTN","MMR","HKG","IND","KAZ","PRK","KGZ","LAO",
+                        "MAC","MNG","PAK","RUS","TJK","VNM","NPL"), "borders[0]"),
+                Arguments.of("EST", Arrays.asList("LVA","RUS"), "borders[0]"),
+                Arguments.of("FIN", Arrays.asList("NOR","SWE","RUS"), "borders[0]"),
+                Arguments.of("GEO", Arrays.asList("ARM","AZE","RUS","TUR"), "borders[0]"),
+                Arguments.of("KAZ", Arrays.asList("CHN","KGZ","RUS","TKM","UZB"), "borders[0]"),
+                Arguments.of("PRK", Arrays.asList("CHN","KOR","RUS"), "borders[0]"),
+                Arguments.of("LVA", Arrays.asList("BLR","EST","LTU","RUS"), "borders[0]"),
+                Arguments.of("LTU", Arrays.asList("BLR","LVA","POL","RUS"), "borders[0]"),
+                Arguments.of("MNG", Arrays.asList("CHN","RUS"), "borders[0]"),
+                Arguments.of("NOR", Arrays.asList("FIN","SWE","RUS"), "borders[0]"),
+                Arguments.of("POL", Arrays.asList("BLR","CZE","DEU","LTU","RUS","SVK","UKR"), "borders[0]"),
+                Arguments.of("UKR", Arrays.asList("BLR","HUN","MDA","POL","ROU","RUS","SVK"), "borders[0]")
                 );
     }
 }

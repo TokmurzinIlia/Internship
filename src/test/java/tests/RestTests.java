@@ -19,7 +19,7 @@ public class RestTests {
 
     @Order(1)
     @ParameterizedTest(name = "Test status code {0}")
-    @CsvSource({"AZE","BLR","CHN","EST","FIN","GEO","KAZ","PRK","LVA","LTU","MNG","NOR","POL","UKR"})
+    @ArgumentsSource(DataProviderCountryBorders.class)
     public void statusCodeTest(String country){
         Response rs = Methods
                 .getCountryBoarderResponse(country);
@@ -34,9 +34,9 @@ public class RestTests {
     }
 
     @Order(2)
-    @ParameterizedTest(name = "Test that checks a list of boarders by values country code {1}")
+    @ParameterizedTest(name = "Test that checks a list of boarders by values country code {0}")
     @ArgumentsSource(DataProviderCountryBorders.class)
-    public void bordersTest(List<String> expectedListCountryBorders, String countryCode, String key){
+    public void bordersTest(String countryCode, List<String> expectedListCountryBorders, String key){
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
@@ -53,33 +53,34 @@ public class RestTests {
         System.out.println();
     }
 
+//    @Order(3)
+//    @ParameterizedTest(name = "Test that checks the mutuality of boarders")
+//    @CsvSource({"AZE, RUS, borders[0]","BLR, RUS, borders[0]","CHN, RUS, borders[0]","EST, RUS, borders[0]","FIN, RUS, borders[0]",
+//            "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
+//            ,"MNG, RUS, borders[0]","NOR, RUS, borders[0]","POL, RUS, borders[0]","UKR, RUS, borders[0]"})
+//    public void mutualityBordersTest(String borderingСountry, String givenСountry, String key){
+//
+//        Response rs = Methods
+//                .getCountryBoarderResponse(borderingСountry);
+//
+//        Log.info("Request response received");
+//
+//        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+//
+//        Log.info("An up-to-date list of countries bordering on " + borderingСountry);
+//
+//        assertTrue(actualListCountryBorders.contains(givenСountry));
+//
+//        Log.info("The current list of countries contains " + givenСountry);
+//
+//        System.out.println();
+//    }
+
     @Order(3)
-    @ParameterizedTest(name = "Test that checks the mutuality of boarders")
-    @CsvSource({"AZE, RUS, borders[0]","BLR, RUS, borders[0]","CHN, RUS, borders[0]","EST, RUS, borders[0]","FIN, RUS, borders[0]",
-            "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
-            ,"MNG, RUS, borders[0]","NOR, RUS, borders[0]","POL, RUS, borders[0]","UKR, RUS, borders[0]"})
-    public void mutualityBordersTest(String borderingСountry, String givenСountry, String key){
-
-        Response rs = Methods
-                .getCountryBoarderResponse(borderingСountry);
-
-        Log.info("Request response received");
-
-        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
-
-        Log.info("An up-to-date list of countries bordering on " + borderingСountry);
-
-        assertTrue(actualListCountryBorders.contains(givenСountry));
-
-        Log.info("The current list of countries contains " + givenСountry);
-
-        System.out.println();
-    }
-
-    @Order(4)
-    @ParameterizedTest(name = "A test that checks the reciprocity of the value of the border of a given country {1} with the current list of bordering countries ")
+    @ParameterizedTest(name = "A test that checks the reciprocity of the value of the border of a given country {0} " +
+            "with the current list of bordering countries ")
     @ArgumentsSource(DataProviderCountryBorders.class)
-    public void mutualityBordersTest1(List<String> borderingСountry, String givenСountry, String key) {
+    public void mutualityBordersTest1(String givenСountry, List<String> borderingСountry, String key) {
 
         for (int i = 0; i < borderingСountry.size(); i++) {
 
