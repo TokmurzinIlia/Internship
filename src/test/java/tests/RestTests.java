@@ -5,25 +5,48 @@ import io.restassured.response.Response;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.opentest4j.AssertionFailedError;
 import utilsAPI.Log;
 import utilsAPI.Methods;
 import java.util.List;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RestTests {
 
 
-    @ParameterizedTest(name = "Test status code with valid country code to uppercase {0}")
+    @ParameterizedTest(name = "Test status code with valid three-character country code to uppercase {0}")
     @ArgumentsSource(DataProviderCountryBorders.class)
-    public void statusCodeTestWithValidData(String countryCode){
+    public void statusCodeTestWithValidThreeСharacterСountryСode(String countryCode){
 
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
         Log.info("Request response received");
+
+        Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
+
+        System.out.println();
+    }
+
+    @ParameterizedTest(name = "Test status code with valid two-character country code to uppercase {0}")
+    @ArgumentsSource(DataProviderCountryBorders.class)
+    public void statusCodeTestWithTwoСharacterСountryСode(String countryCode){
+
+        Response rs = Methods
+                .getCountryBoarderResponse(countryCode);
+
+        Log.info("Request response received with three-character country code");
+
+        countryCode = Methods.getListAlpha2CodeFromResponse(rs);
+
+        Log.info("Get two-character country code from response");
+
+        rs = Methods.getCountryBoarderResponse(countryCode);
+
+        Log.info("Request response received with two-character country code");
 
         Methods.statusCodeValidate200(rs);
 
@@ -104,6 +127,23 @@ public class RestTests {
         Methods.statusCodeValidate200(rs);
 
         Log.info("Status response code 200");
+
+        System.out.println();
+    }
+
+    @ParameterizedTest(name = "Test status code with invalid data {0}")
+    @CsvSource({"a", "z", "g", "1", "50", "99", "100", "101", "199", "200", "999", "1000",
+            "1001", "1999", "12345678954621", "0", "-1", "-50", "-99", "-100", "-101", "-12345678954621", "russia", "<script>"})
+    public void statusCodeTestWithInValidData(String countryCode){
+
+        Response rs = Methods
+                .getCountryBoarderResponse(countryCode);
+
+        Log.info("Request response received");
+
+        Methods.statusCodeValidate400(rs);
+
+        Log.info("Status response code 400");
 
         System.out.println();
     }

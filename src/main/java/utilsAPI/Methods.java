@@ -28,6 +28,13 @@ public class Methods {
                .statusCode(200);
     }
 
+    @Step("Status code validate 400")
+    public static ValidatableResponse statusCodeValidate400(Response response){
+       return response
+               .then()
+               .statusCode(400);
+    }
+
     @Step("Getting a list borders from response by value {0} and {1}")
     public static List<String> getListBoardersFromResponse(Response response, String key){
        return response
@@ -49,5 +56,14 @@ public class Methods {
 
     }
 
+    @Step("Remove last char")
+    public static String removeLastChar(String str) {
+        return StringUtils.chop(str);
+    }
 
+    @Step("Getting a list borders from response by value {0}")
+    public static String getListAlpha2CodeFromResponse(Response response){
+        return response
+                .then().extract().jsonPath().get("alpha2Code[0]");
+    }
 }
