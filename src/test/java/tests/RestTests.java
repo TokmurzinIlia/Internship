@@ -135,7 +135,8 @@ public class RestTests {
 
     @ParameterizedTest(name = "Test status code with invalid data {0}")
     @CsvSource({"a", "z", "g", "1", "50", "99", "100", "101", "199", "200", "999", "1000",
-            "1001", "1999", "12345678954621", "0", "-1", "-50", "-99", "-100", "-101", "-12345678954621", "russia", "<script>"})
+            "1001", "1999", "12345678954621", "0", "-1", "-50", "-99", "-100", "-101", "-12345678954621", "<", "$", "@", "&"
+            ,"%", "/", "russia", "<script>"})
     public void statusCodeTestWithInValidDataCountryCode(String countryCode){
 
         Response rs = Methods

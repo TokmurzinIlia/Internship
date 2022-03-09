@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -12,33 +13,42 @@ import static endpoints.EndPoints.*;
 import static io.restassured.RestAssured.given;
 
 public class Methods {
+
+    private static RequestSpecification requestSpec = ApiSpecification.getRequestSpecification();
+
     @Step("Getting a response by value {0}")
     public static Response getCountryBoarderResponse(String countryCode){
        return given()
-                .baseUri(BASEURI)
-                .basePath(BASEPATH)
-                .contentType(ContentType.JSON)
-                .when().get(CODES+countryCode);
+                   .spec(requestSpec)
+                   .when()
+                   .get(CODES+countryCode);
+    }
+
+    @Step("Status code validate {2}}")
+    public static ValidatableResponse statusCodeValidate200(Response response, int statusCode){
+        return response
+                    .then()
+                    .statusCode(statusCode);
     }
 
     @Step("Status code validate 200")
     public static ValidatableResponse statusCodeValidate200(Response response){
        return response
-               .then()
-               .statusCode(200);
+                   .then()
+                   .statusCode(200);
     }
 
     @Step("Status code validate 400")
     public static ValidatableResponse statusCodeValidate400(Response response){
        return response
-               .then()
-               .statusCode(400);
+                   .then()
+                   .statusCode(400);
     }
 
     @Step("Getting a list borders from response by value {0} and {1}")
     public static List<String> getListBoardersFromResponse(Response response, String key){
        return response
-               .then().extract().jsonPath().get(key);
+                   .then().extract().jsonPath().get(key);
     }
 
     @Step("Convert a string to a string whose first letter is capitalized followed by lowercase")
@@ -64,6 +74,6 @@ public class Methods {
     @Step("Getting a list borders from response by value {0}")
     public static String getListAlpha2CodeFromResponse(Response response){
         return response
-                .then().extract().jsonPath().get("alpha2Code[0]");
+                    .then().extract().jsonPath().get("alpha2Code[0]");
     }
 }
