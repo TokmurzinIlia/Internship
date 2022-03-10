@@ -24,7 +24,11 @@ public class RestTests {
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -40,11 +44,15 @@ public class RestTests {
 
         countryCode = Methods.getListAlpha2CodeFromResponse(rs);
 
+        Log.info("Get two-character country code from response");
+
         rs = Methods.getCountryBoarderResponse(countryCode);
 
         Log.info("Request response received with two-character country code");
 
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -56,7 +64,11 @@ public class RestTests {
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode.toLowerCase());
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -65,14 +77,18 @@ public class RestTests {
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void statusCodeTestFirstLetterCapitalizedWithValidDataCountryCode(String countryCode){
 
-        countryCode = Methods.convertStringToStringWhoseFirstLetterCapitalized(countryCode);
+        countryCode = Methods.сonvertStringToStringWhoseFirstLetterCapitalized(countryCode);
 
         Log.info("Convert a country code to a string whose first letter is capitalized followed by lowercase");
 
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -81,14 +97,18 @@ public class RestTests {
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void statusCodeTestSecondLetterCapitalizedWithValidDataCountryCode(String countryCode){
 
-        countryCode = Methods.convertStringToStringWhoseDesiredLetterCapitalized(countryCode, 1);
+        countryCode = Methods.сonvertStringToStringWhoseDesiredLetterCapitalized(countryCode, 1);
 
         Log.info("Convert a country code to a string whose second letter is capitalized followed by lowercase");
 
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -97,14 +117,18 @@ public class RestTests {
     @ArgumentsSource(DataProviderCountryBorders.class)
     public void statusCodeTestThirdLetterCapitalizedWithValidDataCountryCode(String countryCode){
 
-        countryCode = Methods.convertStringToStringWhoseDesiredLetterCapitalized(countryCode, 2);
+        countryCode = Methods.сonvertStringToStringWhoseDesiredLetterCapitalized(countryCode, 2);
 
         Log.info("Convert a country code to a string whose second letter is capitalized followed by lowercase");
 
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate200(rs);
+
+        Log.info("Status response code 200");
 
         System.out.println();
     }
@@ -118,7 +142,11 @@ public class RestTests {
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate400(rs);
+
+        Log.info("Status response code 400");
 
         System.out.println();
     }
@@ -130,7 +158,11 @@ public class RestTests {
         Response rs = Methods
                 .getCountryBoarderResponse(null);
 
+        Log.info("Request response received");
+
         Methods.statusCodeValidate400(rs);
+
+        Log.info("Status response code 400");
 
         System.out.println();
     }
@@ -143,7 +175,11 @@ public class RestTests {
         Response rs = Methods
                 .getCountryBoarderResponse(countryCode);
 
-        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(countryCode, rs, key);
+        Log.info("Request response received");
+
+        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+
+        Log.info("An up-to-date list of countries bordering on " + countryCode);
 
         assertEquals(expectedListCountryBorders, actualListCountryBorders);
 
@@ -152,29 +188,55 @@ public class RestTests {
         System.out.println();
     }
 
+//    @Order(3)
+//    @ParameterizedTest(name = "Test that checks the mutuality of boarders")
+//    @CsvSource({"AZE, RUS, borders[0]","BLR, RUS, borders[0]","CHN, RUS, borders[0]","EST, RUS, borders[0]","FIN, RUS, borders[0]",
+//            "GEO, RUS, borders[0]","KAZ, RUS, borders[0]","PRK, RUS, borders[0]","LVA, RUS, borders[0]","LTU, RUS, borders[0]"
+//            ,"MNG, RUS, borders[0]","NOR, RUS, borders[0]","POL, RUS, borders[0]","UKR, RUS, borders[0]"})
+//    public void mutualityBordersTest(String borderingСountry, String givenСountry, String key){
+//
+//        Response rs = Methods
+//                .getCountryBoarderResponse(borderingСountry);
+//
+//        Log.info("Request response received");
+//
+//        List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+//
+//        Log.info("An up-to-date list of countries bordering on " + borderingСountry);
+//
+//        assertTrue(actualListCountryBorders.contains(givenСountry));
+//
+//        Log.info("The current list of countries contains " + givenСountry);
+//
+//        System.out.println();
+//    }
+
+
     @ParameterizedTest(name = "A test that checks the reciprocity of the value of the border of a given country {0} " +
             "with the current list of bordering countries ")
     @ArgumentsSource(DataProviderCountryBorders.class)
-    public void mutualityBordersTest1(String givenCountry, List<String> borderingCountry, String key) {
+    public void mutualityBordersTest1(String givenСountry, List<String> borderingСountry, String key) {
 
-        for (int i = 0; i < borderingCountry.size(); i++) {
+        for (int i = 0; i < borderingСountry.size(); i++) {
 
             Response rs = Methods
-                    .getCountryBoarderResponse(borderingCountry.get(i));
+                    .getCountryBoarderResponse(borderingСountry.get(i));
 
-            List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(givenCountry, rs, key);
+            Log.info("Request response received");
 
-            Log.info("An up-to-date list of countries bordering on " + borderingCountry.get(i));
+            List<String> actualListCountryBorders = Methods.getListBoardersFromResponse(rs, key);
+
+            Log.info("An up-to-date list of countries bordering on " + borderingСountry.get(i));
 
         try {
-            assertTrue(actualListCountryBorders.contains(givenCountry));
+            assertTrue(actualListCountryBorders.contains(givenСountry));
 
-            Log.info("The current list of countries contains " + givenCountry);
+            Log.info("The current list of countries contains " + givenСountry);
 
             System.out.println();
         }
         catch (AssertionFailedError e){
-            Log.error("The current list of countries does not contains " + givenCountry, e);
+            Log.error("The current list of countries does not contains " + givenСountry, e);
 
             System.out.println();
         }
